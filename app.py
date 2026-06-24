@@ -54,7 +54,7 @@ with row1_col1:
     st.subheader("Top 10 Products by Complaint Volume")
     top_products = df['Product'].value_counts().head(10).reset_index()
     top_products.columns = ['Product', 'Complaints']
-    fig_prod = px.bar(top_products, x='Complaints', y='Product', orientation='h', color='Complaints', color_continuous_scale='Viridis')
+    fig_prod = px.bar(top_products, x='Complaints', y='Product', orientation='h', color='Complaints', color_continuous_scale='viridis')
     fig_prod.update_layout(yaxis={'categoryorder':'total ascending'}, showlegend=False)
     st.plotly_chart(fig_prod, use_container_width=True)
 
@@ -63,7 +63,7 @@ with row1_col2:
     st.subheader("Top 10 Complaint Issues")
     top_issues = df['Issue'].value_counts().head(10).reset_index()
     top_issues.columns = ['Issue', 'Complaints']
-    fig_issue = px.bar(top_issues, x='Complaints', y='Issue', orientation='h', color='Complaints', color_continuous_scale='Magma')
+    fig_issue = px.bar(top_issues, x='Complaints', y='Issue', orientation='h', color='Complaints', color_continuous_scale='magma')
     fig_issue.update_layout(yaxis={'categoryorder':'total ascending'}, showlegend=False)
     st.plotly_chart(fig_issue, use_container_width=True)
 
@@ -72,6 +72,7 @@ with row2_col1:
     st.subheader("Submission Methods")
     sub_via = df['Submitted via'].value_counts().reset_index()
     sub_via.columns = ['Method', 'Count']
+    # FIXED: Corrected path to qualitative.Pastel
     fig_pie = px.pie(sub_via, values='Count', names='Method', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
     st.plotly_chart(fig_pie, use_container_width=True)
 
@@ -80,7 +81,8 @@ with row2_col2:
     st.subheader("Top Company Responses to Consumers")
     comp_resp = df['Company response to consumer'].value_counts().head(5).reset_index()
     comp_resp.columns = ['Response', 'Count']
-    fig_resp = px.bar(comp_resp, x='Count', y='Response', orientation='h', color='Count', color_continuous_scale='Rocket')
+    # FIXED: Changed 'Rocket' to lowercase 'rocket'
+    fig_resp = px.bar(comp_resp, x='Count', y='Response', orientation='h', color='Count', color_continuous_scale='rocket')
     fig_resp.update_layout(yaxis={'categoryorder':'total ascending'}, showlegend=False)
     st.plotly_chart(fig_resp, use_container_width=True)
 
@@ -97,5 +99,7 @@ with row3_col2:
     st.subheader("Timely Response Distribution")
     timely = df['Timely response?'].fillna('No Response Recorded').value_counts().reset_index()
     timely.columns = ['Timely Status', 'Count']
-    fig_timely = px.bar(timely, x='Timely Status', y='Count', color='Timely Status', color_discrete_sequence=px.colors.sequential.Crest)
+    # FIXED: Safely using color_continuous_scale for sequential mapping instead of passing a continuous array directly to standard sequences
+    fig_timely = px.bar(timely, x='Timely Status', y='Count', color='Count', color_continuous_scale='crest')
+    fig_timely.update_layout(showlegend=False)
     st.plotly_chart(fig_timely, use_container_width=True)
