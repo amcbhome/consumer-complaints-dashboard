@@ -72,7 +72,7 @@ with row2_col1:
     st.subheader("Submission Methods")
     sub_via = df['Submitted via'].value_counts().reset_index()
     sub_via.columns = ['Method', 'Count']
-    fig_pie = px.pie(sub_via, values='Count', names='Method', hole=0.4, color_discrete_sequence=px.colors.pastel.Pastel)
+    fig_pie = px.pie(sub_via, values='Count', names='Method', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
     st.plotly_chart(fig_pie, use_container_width=True)
 
 # 4. Top Company Responses
