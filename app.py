@@ -72,7 +72,7 @@ with row2_col1:
     st.subheader("Submission Methods")
     sub_via = df['Submitted via'].value_counts().reset_index()
     sub_via.columns = ['Method', 'Count']
-    # FIXED: Corrected path to qualitative.Pastel
+    # Using 'Pastel' sequence safely here
     fig_pie = px.pie(sub_via, values='Count', names='Method', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
     st.plotly_chart(fig_pie, use_container_width=True)
 
@@ -81,8 +81,8 @@ with row2_col2:
     st.subheader("Top Company Responses to Consumers")
     comp_resp = df['Company response to consumer'].value_counts().head(5).reset_index()
     comp_resp.columns = ['Response', 'Count']
-    # FIXED: Changed 'Rocket' to lowercase 'rocket'
-    fig_resp = px.bar(comp_resp, x='Count', y='Response', orientation='h', color='Count', color_continuous_scale='rocket')
+    # SAFE CHANGED: Swapped 'rocket' for native 'plasma' scale
+    fig_resp = px.bar(comp_resp, x='Count', y='Response', orientation='h', color='Count', color_continuous_scale='plasma')
     fig_resp.update_layout(yaxis={'categoryorder':'total ascending'}, showlegend=False)
     st.plotly_chart(fig_resp, use_container_width=True)
 
@@ -99,7 +99,7 @@ with row3_col2:
     st.subheader("Timely Response Distribution")
     timely = df['Timely response?'].fillna('No Response Recorded').value_counts().reset_index()
     timely.columns = ['Timely Status', 'Count']
-    # FIXED: Safely using color_continuous_scale for sequential mapping instead of passing a continuous array directly to standard sequences
-    fig_timely = px.bar(timely, x='Timely Status', y='Count', color='Count', color_continuous_scale='crest')
+    # SAFE CHANGED: Swapped 'crest' for native 'cividis' scale
+    fig_timely = px.bar(timely, x='Timely Status', y='Count', color='Count', color_continuous_scale='cividis')
     fig_timely.update_layout(showlegend=False)
     st.plotly_chart(fig_timely, use_container_width=True)
